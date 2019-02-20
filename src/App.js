@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { Admin, Resource } from 'react-admin';
+import jsonServerProvider from 'ra-data-json-server';
+import {UserList} from './components/users';
+import { PostList, PostEdit, PostCreate} from './components/posts';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+// Customizing the Menu Icons
+import PostIcon from '@material-ui/icons/Book';
+import UserIcon from '@material-ui/icons/Group';
+
+// Adding a Dashboard
+import Dashboard from './components/Dashboard';
+
+// Adding a Login Page
+import authProvider from './components/authProvider';
+
+
+const App = () => (
+  <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={jsonServerProvider('http://jsonplaceholder.typicode.com')}>
+      <Resource name="users" list={UserList} icon={UserIcon} />
+      <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} icon={PostIcon} />
+  </Admin>
+);
 
 export default App;
